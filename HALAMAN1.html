@@ -8,47 +8,57 @@
         body {
             font-family: Arial, sans-serif;
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
             justify-content: flex-start;
             align-items: center;
             height: 100vh;
             margin: 0;
             background-color: #669be9;
-            padding: 20px; 
-            overflow-y: auto; 
+            padding: 20px;
+            box-sizing: border-box; /* Pastikan padding dan margin tidak mempengaruhi ukuran elemen */
+            overflow-y: auto;
         }
 
         img {
-            max-width: 100%;
-            height: auto; 
-            margin-bottom: 20px; 
-            border-radius: 10px; 
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+            max-width: 90%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .typing-text {
-            font-size: 20px; 
+            font-size: 20px;
             overflow: hidden;
-            max-width: 100%;
-            white-space: normal; 
-            word-break: break-word; 
-            text-align: center; 
+            max-width: 90%;
+            white-space: normal;
+            word-break: break-word;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         @media (max-width: 600px) {
             .typing-text {
-                font-size: 18px; 
+                font-size: 16px;
+                padding: 0 10px; /* Menambahkan padding di samping agar teks tidak terlalu mepet */
+            }
+
+            #whatsapp-button {
+                font-size: 16px;
+                padding: 8px 16px;
+            }
+
+            img {
+                max-width: 100%;
             }
         }
 
-        /* Sembunyikan audio dari tampilan */
         audio {
-            display: none; /* Menyembunyikan elemen audio dari tampilan */
+            display: none;
         }
 
-        /* Gaya tombol WhatsApp */
         #whatsapp-button {
-            display: none; /* Sembunyikan tombol pada awalnya */
+            display: none;
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 18px;
@@ -63,6 +73,14 @@
         #whatsapp-button:hover {
             background-color: #20b958;
         }
+
+        /* Pastikan tombol WhatsApp tidak terlalu besar di layar kecil */
+        @media (max-width: 400px) {
+            #whatsapp-button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -70,64 +88,70 @@
     <img src="hbd.jpg" alt="Foto"> 
     <div class="typing-text" id="typing"></div>
 
-    <!-- Audio dengan autoplay dan loop -->
     <audio id="background-music" autoplay loop>
-        <source src="Backsound.mp3" type="audio/mpeg"> 
+        <source src="Backsound.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
-    <!-- Tombol WhatsApp -->
     <button id="whatsapp-button" onclick="window.location.href='https://whatsapp.com/channel/0029Var4Uns3mFY8ZdL2Cc2R?text=Terimakasih%20min'">Reply to message</button>
 
     <script>
         const texts = [
-    "SELAMAT ULANG TAHUN" ,
-    "Fahreza Aditya Al-ghifari",
-    "Semoga di tahun dan bulan ini",
-    "Apa yang kamu cita-citakan terwujud",
-    "walaupun aku sendiri tidak tau apa cita-citamu",
-    "Dan semoga di tahun ini",
-    "Kamu menjadi lebih baik dari sebelumnya",
-    "Walaupun mungkin karya aku yang ini belum sempurna",
-    "Semoga kamu menyukainya" ,
-    "Mungkin, ini kado pertama dan terakhir aku buatmu" ,
-    "Kalaupun kamu berpikir kenapa begitu?" ,
-    "Aku sebenarnya punya alasan sendiri kenapa harus lakuin ini" ,
-];
+            "SELAMAT ULANG TAHUN",
+            "Fahreza Aditya Al-ghifari",
+            "Semoga di tahun dan bulan ini",
+            "Apa yang kamu cita-citakan terwujud",
+            "Sehat selalu",
+            "Dan semoga di tahun ini",
+            "Kamu bisa menjadi sosok yang lebih baik dari sebelumnya",
+            "Maaf yaa, mungkin karya aku yang ini belum sempurna",
+            "Semoga kamu menyukainya",
+            "Mungkin, ini kado pertama dan terakhir aku buatmu",
+            "Terima kasih karena selama ini udah mau menjadi temanku",
+            "Mungkin tanpa kamu ketahui tepat ditanggal 27 maret ini, tanggal yang benar-benar ku tunggu",
+            "Walaupun mungkin hari ini hari yang biasa buatmu, karena gapernah menantikan 'ulang tahun'",
+            "Atau bahkan membuatmu takut karena akan bertambah dewasa",
+            "Tetaplah berpikir bahwa kamu akan tetap hidup dan selalu sehat yaa",
+            "Seperti yang pernah aku bilang waktu itu, 'nnt l jg tw'",
+            "Pencet tombol wa nya yaa, nanti bakal ada sebuah link didalamnya",
+            "Aku ga maksa, terserah kamu mau lihat atau engga",
+            "Mungkin ini aja pesan terakhirku buatmu",
+            "Love You, Favorite Person <3",
+        ];
 
-let index = 0;
-const typingElement = document.getElementById('typing');
-const typingSpeed = 150; // Kecepatan mengetik
-const whatsappButton = document.getElementById('whatsapp-button'); // Tombol WhatsApp
+        let index = 0;
+        const typingElement = document.getElementById('typing');
+        const typingSpeed = 150;
+        const whatsappButton = document.getElementById('whatsapp-button');
 
-function typeText() {
-    if (index < texts.length) {
-        const paragraph = document.createElement('p'); 
-        paragraph.textContent = ''; 
-        typingElement.appendChild(paragraph); 
-        let charIndex = 0;
+        function typeText() {
+            if (index < texts.length) {
+                const paragraph = document.createElement('p');
+                paragraph.textContent = '';
+                typingElement.appendChild(paragraph);
+                let charIndex = 0;
 
-        function typeChar() {
-            if (charIndex < texts[index].length) {
-                paragraph.textContent += texts[index].charAt(charIndex);
-                charIndex++;
-                setTimeout(typeChar, typingSpeed);
-            } else {
-                index++; 
-                if (index < texts.length) {
-                    setTimeout(typeText, 1000); 
-                } else {
-                    // Tampilkan tombol WhatsApp setelah semua teks selesai diketik
-                    whatsappButton.style.display = 'block';
+                function typeChar() {
+                    if (charIndex < texts[index].length) {
+                        paragraph.textContent += texts[index].charAt(charIndex);
+                        charIndex++;
+                        setTimeout(typeChar, typingSpeed);
+                    } else {
+                        index++;
+                        if (index < texts.length) {
+                            setTimeout(typeText, 1000);
+                        } else {
+                            // Tampilkan tombol WhatsApp setelah semua teks selesai diketik
+                            whatsappButton.style.display = 'block';
+                        }
+                    }
                 }
+
+                typeChar();
             }
         }
 
-        typeChar();
-    }
-}
-
-typeText(); // Mulai animasi mengetik
+        typeText(); // Mulai animasi mengetik
     </script>
 
 </body>
